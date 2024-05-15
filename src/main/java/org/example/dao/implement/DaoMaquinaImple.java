@@ -16,19 +16,21 @@ public class DaoMaquinaImple implements org.example.dao.DaoMaquina {
         PreparedStatement st = null;
         ResultSet rs = null;
         conn = ConexaoMysql.getConection();
+
+        Boolean temMaquina = false;
         try {
             st = conn.prepareStatement("SELECT * FROM maquina WHERE processador_id = ?");
             st.setString(1, idProcessador);
             rs = st.executeQuery();
             if (rs.next()) {
-                return true;
+                temMaquina = true;
             }
         } catch (SQLException e) {
             System.out.println("Erro ao validar maquina: " + e.getMessage());
         } finally {
             // ConexaoMysql.closeStatementAndResultSet(st, rs, conn);
         }
-        return false;
+        return temMaquina;
     }
 
     public void cadastrarMaquinaMysql(Integer id_cadastro, Maquina maquina) throws SQLException {
