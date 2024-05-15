@@ -1,11 +1,6 @@
 package org.example.entidade;
 
-import org.example.entidade.componente.CaracteristicaComponente;
 import org.example.entidade.componente.Registro;
-import oshi.driver.unix.aix.Ls;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class Componente {
     private Integer idComponente;
