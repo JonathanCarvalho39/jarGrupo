@@ -11,13 +11,11 @@ import java.sql.SQLException;
 
 public class Main {
     public static void main(String[] args) throws SQLException, InterruptedException {
-        Looca looca = new Looca();
-
         Registro registro = new Registro();
         Utilitarios utilitarios = new Utilitarios();
         FucionalidadeConsole fucionalidadeConsole = new FucionalidadeConsole();
         Usuario usuario = new Usuario();
-
+        Looca looca = new Looca();
         Maquina maquina = new Maquina(
                 null,
                 looca.getProcessador().getId(),

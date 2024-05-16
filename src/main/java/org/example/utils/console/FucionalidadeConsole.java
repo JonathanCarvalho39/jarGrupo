@@ -23,7 +23,7 @@ public class FucionalidadeConsole {
                             assegurar conformidade com as políticas da empresa.
                             Todas as atividades serão verificadas e, se necessário, medidas serão
                             tomadas automaticamente pelo sistema.
-                                                            
+                                                           
                             """);
                     if (isProcessRunning("whatsApp.exe")) {
                         Thread.sleep(3000);
