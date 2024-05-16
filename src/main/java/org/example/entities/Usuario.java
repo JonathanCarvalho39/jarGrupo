@@ -1,8 +1,9 @@
-package org.example.entidade;
+package org.example.entities;
 
-import org.example.dao.implement.DaoUsuarioImple;
-import org.example.utils.Utilitarios;
+import org.example.dao.Implementation.DaoUsuarioImple;
+import org.example.utilities.Utilitarios;
 
+import java.io.Console;
 import java.sql.SQLException;
 import java.util.Scanner;
 
@@ -12,6 +13,7 @@ public class Usuario {
     private String senha;
     private String login;
 
+    Console console = System.console();
 
     public Usuario() {
     }
@@ -39,7 +41,13 @@ public class Usuario {
         String login = sc.nextLine();
         utilitarios.centralizaTelaHorizontal(22);
         System.out.print("Senha: ");
-        String senha = sc.nextLine();
+        String senha;
+        if (console != null) {
+            char[] passwordArray = console.readPassword();
+            senha = new String(passwordArray);
+        } else {
+            senha = sc.next();
+        }
 
         DaoUsuarioImple daoUsuario = new DaoUsuarioImple();
 

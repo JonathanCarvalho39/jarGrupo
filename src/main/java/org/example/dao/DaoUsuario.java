@@ -2,7 +2,7 @@ package org.example.dao;
 
 
 import org.example.database.DatabaseExeption;
-import org.example.entidade.Usuario;
+import org.example.entities.Usuario;
 import java.sql.SQLException;
 
 public interface DaoUsuario {

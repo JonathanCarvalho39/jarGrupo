@@ -1,17 +1,17 @@
-package org.example.entidade;
+package org.example.entities;
 
 import com.github.britooo.looca.api.core.Looca;
 import org.example.dao.DaoComponente;
 import org.example.dao.DaoJanelasBloqueadas;
 import org.example.dao.DaoMaquina;
 import org.example.dao.DaoRegistro;
-import org.example.dao.implement.DaoComponenteImple;
-import org.example.dao.implement.DaoJanelasBloqueadasImple;
-import org.example.dao.implement.DaoMaquinaImple;
-import org.example.dao.implement.DaoRegistroImple;
-import org.example.entidade.componente.Registro;
-import org.example.utils.Utilitarios;
-import org.example.utils.console.FucionalidadeConsole;
+import org.example.dao.Implementation.DaoComponenteImple;
+import org.example.dao.Implementation.DaoJanelasBloqueadasImple;
+import org.example.dao.Implementation.DaoMaquinaImple;
+import org.example.dao.Implementation.DaoRegistroImple;
+import org.example.entities.component.Registro;
+import org.example.utilities.Utilitarios;
+import org.example.utilities.console.FucionalidadeConsole;
 
 import java.sql.SQLException;
 import java.util.*;

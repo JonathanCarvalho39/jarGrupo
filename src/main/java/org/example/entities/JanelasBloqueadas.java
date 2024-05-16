@@ -1,9 +1,9 @@
-package org.example.entidade;
+package org.example.entities;
 
 import com.github.britooo.looca.api.core.Looca;
 import com.github.britooo.looca.api.group.janelas.Janela;
-import org.example.utils.Utilitarios;
-import org.example.utils.console.FucionalidadeConsole;
+import org.example.utilities.Utilitarios;
+import org.example.utilities.console.FucionalidadeConsole;
 
 import java.util.ArrayList;
 import java.util.List;

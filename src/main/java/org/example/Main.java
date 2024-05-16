@@ -1,11 +1,11 @@
 package org.example;
 
 import com.github.britooo.looca.api.core.Looca;
-import org.example.entidade.Maquina;
-import org.example.entidade.Usuario;
-import org.example.entidade.componente.Registro;
-import org.example.utils.Utilitarios;
-import org.example.utils.console.FucionalidadeConsole;
+import org.example.entities.Maquina;
+import org.example.entities.Usuario;
+import org.example.entities.component.Registro;
+import org.example.utilities.Utilitarios;
+import org.example.utilities.console.FucionalidadeConsole;
 
 import java.sql.SQLException;
 

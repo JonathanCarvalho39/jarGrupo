@@ -1,7 +1,7 @@
-package org.example.dao.implement;
+package org.example.dao.Implementation;
 
 import org.example.database.ConexaoMysql;
-import org.example.entidade.JanelasBloqueadas;
+import org.example.entities.JanelasBloqueadas;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;

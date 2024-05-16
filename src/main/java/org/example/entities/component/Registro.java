@@ -1,4 +1,4 @@
-package org.example.entidade.componente;
+package org.example.entities.component;
 
 import java.time.chrono.ChronoLocalDateTime;
 

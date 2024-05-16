@@ -1,7 +1,7 @@
-package org.example.utils.console;
+package org.example.utilities.console;
 
 
-import org.example.utils.Utilitarios;
+import org.example.utilities.Utilitarios;
 
 import java.io.*;
 

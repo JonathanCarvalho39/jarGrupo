@@ -1,6 +1,6 @@
-package org.example.utils;
+package org.example.utilities;
 
-import org.example.utils.console.FucionalidadeConsole;
+import org.example.utilities.console.FucionalidadeConsole;
 
 public class Utilitarios {
 

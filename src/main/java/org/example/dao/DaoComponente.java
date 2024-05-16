@@ -1,7 +1,7 @@
 package org.example.dao;
 
-import org.example.entidade.Componente;
-import org.example.entidade.Maquina;
+import org.example.entities.Componente;
+import org.example.entities.Maquina;
 
 import java.util.List;
 

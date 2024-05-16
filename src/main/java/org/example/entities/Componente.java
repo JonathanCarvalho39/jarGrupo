@@ -1,6 +1,6 @@
-package org.example.entidade;
+package org.example.entities;
 
-import org.example.entidade.componente.Registro;
+import org.example.entities.component.Registro;
 
 public class Componente {
     private Integer idComponente;

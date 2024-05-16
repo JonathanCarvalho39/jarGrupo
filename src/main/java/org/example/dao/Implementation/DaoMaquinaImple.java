@@ -1,8 +1,8 @@
-package org.example.dao.implement;
+package org.example.dao.Implementation;
 
 import org.example.database.ConexaoMysql;
 import org.example.database.ConexaoSQLServer;
-import org.example.entidade.Maquina;
+import org.example.entities.Maquina;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;

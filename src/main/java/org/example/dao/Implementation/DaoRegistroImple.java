@@ -1,9 +1,9 @@
-package org.example.dao.implement;
+package org.example.dao.Implementation;
 
 import com.github.britooo.looca.api.core.Looca;
 import org.example.database.ConexaoMysql;
-import org.example.entidade.Componente;
-import org.example.entidade.componente.Registro;
+import org.example.entities.Componente;
+import org.example.entities.component.Registro;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;

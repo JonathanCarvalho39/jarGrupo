@@ -1,6 +1,6 @@
 package org.example.dao;
 
-import org.example.entidade.Maquina;
+import org.example.entities.Maquina;
 
 import java.sql.SQLException;
 
