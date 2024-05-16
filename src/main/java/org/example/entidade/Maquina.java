@@ -2,13 +2,16 @@ package org.example.entidade;
 
 import com.github.britooo.looca.api.core.Looca;
 import org.example.dao.DaoComponente;
+import org.example.dao.DaoJanelasBloqueadas;
 import org.example.dao.DaoMaquina;
 import org.example.dao.DaoRegistro;
 import org.example.dao.implement.DaoComponenteImple;
+import org.example.dao.implement.DaoJanelasBloqueadasImple;
 import org.example.dao.implement.DaoMaquinaImple;
 import org.example.dao.implement.DaoRegistroImple;
 import org.example.entidade.componente.Registro;
 import org.example.utils.Utilitarios;
+import org.example.utils.console.FucionalidadeConsole;
 
 import java.sql.SQLException;
 import java.util.*;
@@ -21,6 +24,9 @@ public class Maquina {
     private Double memorialTotal;
     private String sistemaOperacional;
     private Integer arquitetura;
+    private Integer idSetor;
+
+
     private List<Componente> componentes;
 
     final Looca locca = new Looca();
@@ -56,38 +62,46 @@ public class Maquina {
         DaoMaquina daoMaquina = new DaoMaquinaImple();
         DaoComponente daoComponente = new DaoComponenteImple();
         DaoRegistro daoRegistro = new DaoRegistroImple();
+        DaoJanelasBloqueadas daoJanelasBloqueadas = new DaoJanelasBloqueadasImple();
+        FucionalidadeConsole fucionalidadeConsole = new FucionalidadeConsole();
+        JanelasBloqueadas janelasBloqueadas = new JanelasBloqueadas();
+        List<String> listaBloqueio = new ArrayList<>();
 
 
-        if (daoMaquina.validarMaquinaMysql(locca.getProcessador().getId())) {
+        maquina.setIdSetor(daoMaquina.validarMaquinaMysql(locca.getProcessador().getId()).getIdSetor());
 
+        if (daoMaquina.validarMaquinaMysql(locca.getProcessador().getId()) != null) {
 
             while (true) {
+                fucionalidadeConsole.limparConsole();
                 Componente componenteRam = new Componente();
                 Componente componenteCpu = new Componente();
 
                 setComponentes(daoComponente.buscarComponenteMysql(maquina));
 
-                Map<String, Componente> componentes = new HashMap<>();
+                List<Componente> componentesDisco = new ArrayList<>();
                 for (int i = 0; i < listarComponentes().size(); i++) {
                     if (listarComponentes().get(i).getTipo().contains("Memória Ram")) {
                         componenteRam = listarComponentes().get(i);
                     } else if (listarComponentes().get(i).getTipo().contains("Processador")) {
                         componenteCpu = listarComponentes().get(i);
                     } else if (listarComponentes().get(i).getTipo().contains("Disco")) {
-                        String nomeComponente = "componente" + i; // Cria um nome único para cada componente
-                        Componente componente = new Componente();
-                        componentes.put(nomeComponente, componente);
+                        componentesDisco.add(listarComponentes().get(i));
                     }
                 }
 
                 daoRegistro.inserirRegistroTempoReal(componenteRam);
                 daoRegistro.inserirRegistroTempoReal(componenteCpu);
-                for (Map.Entry<String, Componente> entry : componentes.entrySet()) {
-                    daoRegistro.inserirRegistroTempoReal(entry.getValue());
+                for (Componente componenteVez : componentesDisco) {
+                    daoRegistro.inserirRegistroTempoReal(componenteVez);
                 }
-                System.out.println("dado inserido");
+
+                utilitarios.mensagemInformativa();
+                listaBloqueio = daoJanelasBloqueadas.buscarJanelasBloqueadasMysql(maquina.getIdSetor());
+                janelasBloqueadas.monitorarJanelas(listaBloqueio);
                 Thread.sleep(1000);
             }
+
         } else {
             utilitarios.centralizaTelaHorizontal(8);
             utilitarios.mensagemCadastroMaquina();
@@ -117,33 +131,44 @@ public class Maquina {
 
                 maquina.addComponente(componenteCpu);
 
+                Map<String, Componente> componentesDisco = new HashMap<>();
+
                 for (int i = 0; i < looca.getGrupoDeDiscos().getDiscos().size(); i++) {
                     Componente componenteDisco = new Componente(
                             "Disco " + (i + 1),
                             registro.converterGB(looca.getGrupoDeDiscos().getVolumes().get(i).getTotal()),
                             registro.converterGB(looca.getGrupoDeDiscos().getVolumes().get(i).getDisponivel()),
-                            null,
                             looca.getGrupoDeDiscos().getDiscos().get(i).getModelo(),
+                            null,
                             null
                     );
+
+
+                    int idComponenteDisco = daoComponente.cadastrarComponenteMysql(componenteDisco, idCadastro);
+                    componenteDisco.setIdComponente(idComponenteDisco);
+
+                    // Adiciona o componente ao mapa com a chave única
+                    componentesDisco.put("componenteDisco" + (i + 1), componenteDisco);
+
                     maquina.addComponente(componenteDisco);
-                    daoMaquina.cadastrarMaquinaMysql(idCadastro, maquina);
                 }
 
+                daoMaquina.cadastrarMaquinaMysql(idCadastro, maquina);
                 componenteRam.setIdComponente(daoComponente.cadastrarComponenteMysql(componenteRam, idCadastro));
                 componenteCpu.setIdComponente(daoComponente.cadastrarComponenteMysql(componenteCpu, idCadastro));
-                for (int i = 0; i < looca.getGrupoDeDiscos().getDiscos().size(); i++) {
-                    maquina.listarComponentes().get(i).setIdComponente(daoComponente.cadastrarComponenteMysql(maquina.listarComponentes().get(i), idCadastro));
-                }
+
 
                 while (true) {
+                    fucionalidadeConsole.limparConsole();
                     for (Componente componente : maquina.listarComponentes()) {
                         daoRegistro.inserirRegistroTempoReal(componente);
                     }
-                    System.out.println("dado inserido");
+                    daoJanelasBloqueadas.buscarJanelasBloqueadasMysql(maquina.idSetor);
+                    utilitarios.mensagemInformativa();
+                    listaBloqueio = daoJanelasBloqueadas.buscarJanelasBloqueadasMysql(maquina.getIdSetor());
+                    janelasBloqueadas.monitorarJanelas(listaBloqueio);
                     Thread.sleep(1000);
                 }
-
             }
         }
     }
@@ -166,6 +191,14 @@ public class Maquina {
 
     public void listarCaracteristicas() {
 
+    }
+
+    public Integer getIdSetor() {
+        return idSetor;
+    }
+
+    public void setIdSetor(Integer idSetor) {
+        this.idSetor = idSetor;
     }
 
     public Integer getId() {

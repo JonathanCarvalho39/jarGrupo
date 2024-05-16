@@ -1,11 +1,8 @@
 package org.example.dao.implement;
 
 import com.github.britooo.looca.api.core.Looca;
-import org.example.dao.DaoRegistro;
 import org.example.database.ConexaoMysql;
-import org.example.database.ConexaoSQLServer;
 import org.example.entidade.Componente;
-import org.example.entidade.Maquina;
 import org.example.entidade.componente.Registro;
 
 import java.sql.Connection;
@@ -36,7 +33,7 @@ public class DaoRegistroImple implements org.example.dao.DaoRegistro {
         } else if (componente.getTipo().contains("Memória Ram")) {
             usoComponente = registro.converterGB(looca.getMemoria().getEmUso());
             comp = "ram_ocupada";
-        } else if (componente.getTipo().contains("Disco" + contartador)) {
+        } else if (componente.getTipo().contains("Disco " + contartador)) {
             usoComponente = registro.converterGB(looca.getGrupoDeDiscos().getDiscos().get(contartador - 1).getEscritas());
             comp = "uso_disco";
         }

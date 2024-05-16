@@ -10,6 +10,6 @@ public interface DaoMaquina {
 
     Integer buscarSetorMaquina(Integer idMaquina);
 
-    Boolean validarMaquinaMysql(String idProcessador);
+    Maquina validarMaquinaMysql(String idProcessador);
 
 }

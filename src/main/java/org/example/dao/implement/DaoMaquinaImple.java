@@ -11,26 +11,33 @@ import java.sql.SQLException;
 
 public class DaoMaquinaImple implements org.example.dao.DaoMaquina {
 
-    public Boolean validarMaquinaMysql(String idProcessador) {
+    public Maquina validarMaquinaMysql(String idProcessador) {
         Connection conn = null;
         PreparedStatement st = null;
         ResultSet rs = null;
         conn = ConexaoMysql.getConection();
 
-        Boolean temMaquina = false;
+        Maquina maquina = new Maquina();
         try {
             st = conn.prepareStatement("SELECT * FROM maquina WHERE processador_id = ?");
             st.setString(1, idProcessador);
             rs = st.executeQuery();
             if (rs.next()) {
-                temMaquina = true;
+                maquina.setId(rs.getInt("maquina_id"));
+                maquina.setIdPorcessador(rs.getString("processador_id"));
+                maquina.setSistemaOperacional(rs.getString("sistema_operacional"));
+                maquina.setMemorialTotal(rs.getDouble("memoria_total_maquina"));
+                maquina.setArquitetura(rs.getInt("arquitetura"));
+                maquina.setIdSetor(rs.getInt("fk_setor"));
+            } else {
+                return null;
             }
         } catch (SQLException e) {
             System.out.println("Erro ao validar maquina: " + e.getMessage());
         } finally {
             // ConexaoMysql.closeStatementAndResultSet(st, rs, conn);
         }
-        return temMaquina;
+        return maquina;
     }
 
     public void cadastrarMaquinaMysql(Integer id_cadastro, Maquina maquina) throws SQLException {
